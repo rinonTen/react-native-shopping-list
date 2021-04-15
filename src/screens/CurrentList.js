@@ -1,22 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { v4 as uuid } from 'uuid';
+import { FlatList, KeyboardAvoidingView, SafeAreaView, ScrollView } from 'react-native';
+import nachos from '../data/nachos';
+import ListItem, { Separator } from '../components/ListItem';
+import AddItem from '../components/AddItem';
 
-import { FlatList, SafeAreaView, ScrollView } from 'react-native'
-import nachos from '../data/nachos'
-import ListItem, { Separator } from '../components/ListItem'
 export default () => {
+    const [list, setList] = useState(nachos)
+
     return (
-        <SafeAreaView>
-            <FlatList
-                data={nachos}
-                renderItem={({ item, index }) => {
-                   return <ListItem
-                        name={item.name}
-                        onFavoritePress={() => alert("TODO: Do something here")}
-                        isFavorite={index < 2}
-                    />
-                }}
-                keyExtractor={(item) => item.id}
-            />
+        <SafeAreaView style={{ flex: 1 }}>
+            <KeyboardAvoidingView
+                style={{ flex: 1 }}
+                behavior="padding"
+            >
+                <FlatList
+                    data={list}
+                    renderItem={({ item, index }) => {
+                        return <ListItem
+                            name={item.name}
+                            onFavoritePress={() => alert("TODO: Do something here")}
+                            isFavorite={index < 2}
+                        />
+
+                    }}
+                    keyExtractor={(item) => item.id}
+                    ItemSeparatorComponent={() => <Separator />}
+                    ListHeaderComponent={() => {
+                        return <AddItem onSubmitEditing={({ nativeEvent: { text } }) => {
+                            setList([{ id: uuid(), name: text }, ...list])
+                        }} />
+                    }}
+                />
+            </KeyboardAvoidingView>
         </SafeAreaView>
     )
     // return (
@@ -34,6 +50,6 @@ export default () => {
     //             })}
     //         </ScrollView>
     //     </SafeAreaView>
- 
+
 
 };

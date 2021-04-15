@@ -29,13 +29,14 @@ const styles = StyleSheet.create({
         flex: 1,
         height: 1,
         backgroundColor: 'rgba(0, 0, 0, 0.2)',
-    }
-})
+    },
+});
 
-export const Separator = () => <View style={styles.separator} />
+export const Separator = () => <View style={styles.separator} />;
 
 const ListItem = ({ name, onFavoritePress, isFavorite }) => {
     let startIcon;
+
     if (isFavorite) {
         startIcon = Platform.select({
             ios: require('../assets/icons/ios-star.png'),
@@ -49,7 +50,7 @@ const ListItem = ({ name, onFavoritePress, isFavorite }) => {
                 android: require('../assets/icons/md-star-outline.png')
             }
         )
-    }
+    };
 
     return (
         <View style={styles.container}>
@@ -65,7 +66,6 @@ const ListItem = ({ name, onFavoritePress, isFavorite }) => {
                     />
                 </TouchableOpacity>
             }
-
         </View>
     )
 }
