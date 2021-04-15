@@ -7,10 +7,12 @@ export default () => {
     return (
         <SafeAreaView>
             <ScrollView>
-                {nachos.map((item) => {
+                {nachos.map((item, index) => {
                     return <React.Fragment key={item.id}>
                         <ListItem
                             name={item.name}
+                            onFavoritePress={() => alert("TODO: Do something here")}
+                            isFavorite={index < 2}
                         />
                         <Separator />
                     </React.Fragment>
