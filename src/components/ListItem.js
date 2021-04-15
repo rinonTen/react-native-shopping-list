@@ -36,18 +36,19 @@ export const Separator = () => <View style={styles.separator} />
 
 const ListItem = ({ name, onFavoritePress, isFavorite }) => {
     let startIcon;
-
     if (isFavorite) {
         startIcon = Platform.select({
             ios: require('../assets/icons/ios-star.png'),
             android: require('../assets/icons/md-star.png')
-        })
+        }
+        )
     } else {
         startIcon = Platform.select(
             {
                 ios: require('../assets/icons/ios-star-outline.png'),
                 android: require('../assets/icons/md-star-outline.png')
-            })
+            }
+        )
     }
 
     return (
