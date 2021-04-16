@@ -1,12 +1,26 @@
-import React, { useState } from 'react'
-import { v4 as uuid } from 'uuid';
-import { FlatList, KeyboardAvoidingView, SafeAreaView, ScrollView } from 'react-native';
-import nachos from '../data/nachos';
+import React from 'react'
+import { FlatList, KeyboardAvoidingView, SafeAreaView, ScrollView, ActivityIndicator } from 'react-native';
 import ListItem, { Separator } from '../components/ListItem';
 import AddItem from '../components/AddItem';
-
+import AsyncStorage from "@react-native-community/async-storage"; 
+import { useCurrentList } from '../utils/ListManager';
+ 
 export default () => {
-    const [list, setList] = useState(nachos)
+    const {
+        list, 
+        loading,
+        addItem,
+        removeItem
+    } = useCurrentList()
+
+    
+    if (loading) {
+        return (
+            <SafeAreaView>
+                <ActivityIndicator size="large" />
+            </SafeAreaView>
+        )
+    }
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -21,17 +35,16 @@ export default () => {
                             name={item.name}
                             onFavoritePress={() => alert("TODO: Do something here")}
                             isFavorite={index < 2}
-                            onAddedSwipe={() => alert("on added swipe")}
-                            onDeleteSwipe={() => alert("on delete swipe")}
+                            onAddedSwipe={() => removeItem(item.id)}
+                            onDeleteSwipe={() => removeItem(item.id)}
                         />
 
                     }}
                     keyExtractor={(item) => item.id}
                     ItemSeparatorComponent={() => <Separator />}
                     ListHeaderComponent={() => {
-                        return <AddItem onSubmitEditing={({ nativeEvent: { text } }) => {
-                            setList([{ id: uuid(), name: text }, ...list])
-                        }} />
+                        return <AddItem onSubmitEditing={({ nativeEvent: { text } }) => addItem(text)
+                        } />
                     }}
                 />
             </KeyboardAvoidingView>
