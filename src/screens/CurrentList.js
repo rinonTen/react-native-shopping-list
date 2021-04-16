@@ -21,6 +21,8 @@ export default () => {
                             name={item.name}
                             onFavoritePress={() => alert("TODO: Do something here")}
                             isFavorite={index < 2}
+                            onAddedSwipe={() => alert("on added swipe")}
+                            onDeleteSwipe={() => alert("on delete swipe")}
                         />
 
                     }}
