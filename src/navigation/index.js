@@ -10,7 +10,10 @@ const CurrentListStack = () => {
         <NavigationContainer>
             <Stack.Navigator>
                 <Stack.Screen name="CurrentList" component={CurrentList} />
-                <Stack.Screen name="ItemDetails" component={ItemDetails} />
+                <Stack.Screen
+                 name="ItemDetails"
+                  component={ItemDetails}
+                   options={({route}) => ({ title: route.params.item.name })}/>
             </Stack.Navigator>
         </NavigationContainer>
     )
