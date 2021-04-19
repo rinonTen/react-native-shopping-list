@@ -6,9 +6,8 @@ export default ({ route }) => {
         <View>
             <Text>{JSON.stringify(route.params.item, null, 2)}</Text>
         </View>
-    
 )
-    }
+}
  
 
 
