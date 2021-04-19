@@ -2,10 +2,10 @@ import React from 'react'
 import { FlatList, KeyboardAvoidingView, SafeAreaView, ScrollView, ActivityIndicator } from 'react-native';
 import ListItem, { Separator } from '../components/ListItem';
 import AddItem from '../components/AddItem';
-import AsyncStorage from "@react-native-community/async-storage"; 
+// import AsyncStorage from "@react-native-community/async-storage"; 
 import { useCurrentList } from '../utils/ListManager';
  
-export default () => {
+export default ({navigation}) => {
     const {
         list, 
         loading,
@@ -37,6 +37,9 @@ export default () => {
                             isFavorite={index < 2}
                             onAddedSwipe={() => removeItem(item.id)}
                             onDeleteSwipe={() => removeItem(item.id)}
+                            onRowPress={() => {
+                                navigation.navigate('ItemDetails')
+                            }}
                         />
 
                     }}
