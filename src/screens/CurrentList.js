@@ -25,7 +25,7 @@ export default ({navigation}) => {
         )
     }
 
-    AsyncStorage.clear()
+    // AsyncStorage.clear()
     
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -46,7 +46,7 @@ export default ({navigation}) => {
                         return <ListItem
                             name={item.name}
                             onFavoritePress={() => addToFavourites(item, item.id)}
-                            isFavorite={item.isFavorited && true}
+                            isFavorite={item.isFavourited && true}
                             onAddedSwipe={() => addToCart(item)}
                             onDeleteSwipe={() => removeItem(item.id)}
                             onRowPress={() => {
