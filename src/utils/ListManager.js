@@ -21,13 +21,15 @@ export const useCurrentList = () => {
     const [loading, setLoading] = useState(true);
     const [cart, setCart] = useState([]);
     const [favourite, setFavourite] = useState([]);
+    const [isFavourite, setIsfavourite] = useState(false);
 
     const addItem = (text) => {
-        const newList = [{ id: uuid(), name: text }, ...list];
+        const newList = [{ id: uuid(), name: text, isFavourited: false }, ...list];
         setList(newList)
         updateStoredCurrentList(newList)
     }
-
+ 
+    console.log(list)
     const removeItem = (id) => {
         const newList = list.filter(item => item.id !== id);
         setList(newList);
@@ -41,10 +43,19 @@ export const useCurrentList = () => {
         updateStoredCurrentCart(newCart);
     }
 
-    const addToFavourites = (item) => { 
+    const addToFavourites = (item, idToPass) => {
         const newList = [item, ...favourite];
-        setFavourite(newList);
-        updateStoredCurrentFavourite(newList);
+        const updatedList = newList.map(item => {
+            if (item.id === idToPass) {
+                return {
+                    ...item,
+                    isFavourited: true
+                }
+            }
+        })
+        setList(updatedList);
+        setFavourite(updatedList);
+        updateStoredCurrentFavourite(updatedList);
     }
 
     useEffect(() => {
@@ -83,6 +94,7 @@ export const useCurrentList = () => {
         cart,
         addToCart,
         favourite,
+        isFavourite,
         addToFavourites
     }
 }

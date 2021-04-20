@@ -13,7 +13,8 @@ export default ({navigation}) => {
         removeItem,
         cart,
         addToCart, 
-        addToFavourites
+        addToFavourites,
+        isFavourite,
     } = useCurrentList()
  
     if (loading) {
@@ -24,7 +25,7 @@ export default ({navigation}) => {
         )
     }
 
-    // AsyncStorage.clear()
+    AsyncStorage.clear()
     
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -38,14 +39,14 @@ export default ({navigation}) => {
                         {title: 'Cart', data: cart}, 
                     ]}
                     renderSectionHeader={({ section }) => {
-                        <SectionHeader title={section.title} />
+                       return <SectionHeader title={section.title} />
                     }}
                     data={list}
                     renderItem={({ item, index }) => {
                         return <ListItem
                             name={item.name}
-                            onFavoritePress={() => addToFavourites(item)}
-                            isFavorite={index < 2}
+                            onFavoritePress={() => addToFavourites(item, item.id)}
+                            isFavorite={item.isFavorited && true}
                             onAddedSwipe={() => addToCart(item)}
                             onDeleteSwipe={() => removeItem(item.id)}
                             onRowPress={() => {

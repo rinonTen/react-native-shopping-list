@@ -1,46 +1,43 @@
-import React from 'react'; 
-import { SectionList, KeyboardAvoidingView, SafeAreaView, ScrollView, ActivityIndicator } from 'react-native';
+import React from 'react';
+import { FlatList, View, SectionList, KeyboardAvoidingView, SafeAreaView, ScrollView, ActivityIndicator, Text } from 'react-native';
 import ListItem, { SectionHeader, Separator } from '../components/ListItem';
 import { useCurrentList } from '../utils/ListManager';
- 
-export default ({navigation}) => {
+
+export default ({ navigation }) => {
     const {
-        list, 
-        loading, 
+        list,
+        loading,
         removeItem,
         cart,
-        addToCart, 
-        favourite, 
+        addToCart,
+        favourite,
     } = useCurrentList()
- 
+
     if (loading) {
         return (
             <SafeAreaView>
                 <ActivityIndicator size="large" />
             </SafeAreaView>
         )
-    }
- 
-    console.log(favourite)
+    } 
+    
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <KeyboardAvoidingView
-                style={{ flex: 1 }}
-                behavior="padding"
-            >
-                <SectionList
-                    // sections={[
-                    //     {title: 'List', data: list},
-                    //     {title: 'Cart', data: cart}, 
-                    // ]}
+             <SectionList
+                    sections={[
+                        {title: 'List', data: list},
+                        {title: 'Cart', data: cart}, 
+                    ]}
+                    renderSectionHeader={({ section }) => {
+                       return <SectionHeader title={section.title} />
+                    }}
                     data={favourite}
-                    renderItem={({ item, index }) => {
+                    renderItem={({ item, index}) => {
                         return <ListItem
-                            name={item.name}
-                            // onFavoritePress={() => addToFavourites(item)}
-                            // isFavorite={index < 2}
+                            name={item.name} 
                             onAddedSwipe={() => addToCart(item)}
                             onDeleteSwipe={() => removeItem(item.id)}
+                            isFavorite={index < 2}
                             onRowPress={() => {
                                 navigation.navigate('ItemDetails', { 
                                     item,
@@ -51,12 +48,10 @@ export default ({navigation}) => {
                     }}
                     keyExtractor={(item) => item.id}
                     ItemSeparatorComponent={() => <Separator />}
-                     
+                   
                 />
-            </KeyboardAvoidingView>
         </SafeAreaView>
     )
- 
+
 };
- 
- 
+
