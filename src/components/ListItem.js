@@ -46,6 +46,13 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontWeight: '600',
         padding: 20
+    },
+    sectionContainer: {
+        backgroundColor: '#d3d3d3',
+        paddingVertical: 10,
+    },
+    sectionText: {
+        fontWeight: '600',
     }
 });
 
@@ -64,6 +71,7 @@ const LeftActions = (progress, dragX) => {
     </View>
 }
 
+
 const RightActions = (progress, dragX) => {
     const scale = dragX.interpolate({
         inputRange: [-100, 0],
@@ -77,6 +85,13 @@ const RightActions = (progress, dragX) => {
         </Animated.Text>
     </View>
 }
+
+export const SectionHeader = ({ title }) => (
+    <View style={[styles.container, styles.sectionContainer]}>
+        <Text style={styles.sectionText}>{title}</Text>
+    </View>
+)
+
 const ListItem = ({ name, onFavoritePress, isFavorite, onAddedSwipe, onDeleteSwipe, onRowPress }) => {
     let startIcon;
 
@@ -103,20 +118,20 @@ const ListItem = ({ name, onFavoritePress, isFavorite, onAddedSwipe, onDeleteSwi
             onSwipeableRightOpen={onDeleteSwipe}
         >
             <TouchableOpacity onPress={onRowPress}>
-            <View style={styles.container}>
-                <Text style={styles.text}>
-                    {name}
-                </Text>
-                {
-                    onFavoritePress && <TouchableOpacity onPress={onFavoritePress}>
-                        <Image
-                            source={startIcon}
-                            style={styles.icon}
-                            resizeMode="contain"
-                        />
-                    </TouchableOpacity>
-                }
-            </View>
+                <View style={styles.container}>
+                    <Text style={styles.text}>
+                        {name}
+                    </Text>
+                    {
+                        onFavoritePress && <TouchableOpacity onPress={onFavoritePress}>
+                            <Image
+                                source={startIcon}
+                                style={styles.icon}
+                                resizeMode="contain"
+                            />
+                        </TouchableOpacity>
+                    }
+                </View>
             </TouchableOpacity>
         </Swipeable>
     )

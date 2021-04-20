@@ -36,7 +36,6 @@ const Tabs = () => {
             <Tab.Navigator
                 screenOptions={({ route }) => ({
                     tabBarIcon: ({ color, focused }) => {
-                        // const image = require('../assets/icons/ios-list.png');
                         let image;
                         const routeName = route.name;
                         if (routeName === "Shopping List") {

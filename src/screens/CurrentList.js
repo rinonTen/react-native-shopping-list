@@ -1,8 +1,8 @@
 import React from 'react'
-import { FlatList, KeyboardAvoidingView, SafeAreaView, ScrollView, ActivityIndicator } from 'react-native';
-import ListItem, { Separator } from '../components/ListItem';
+import { SectionList, KeyboardAvoidingView, SafeAreaView, ScrollView, ActivityIndicator } from 'react-native';
+import ListItem, { SectionHeader, Separator } from '../components/ListItem';
 import AddItem from '../components/AddItem';
-// import AsyncStorage from "@react-native-community/async-storage"; 
+import AsyncStorage from "@react-native-community/async-storage"; 
 import { useCurrentList } from '../utils/ListManager';
  
 export default ({navigation}) => {
@@ -10,10 +10,12 @@ export default ({navigation}) => {
         list, 
         loading,
         addItem,
-        removeItem
+        removeItem,
+        cart,
+        addToCart, 
+        addToFavourites
     } = useCurrentList()
-
-    
+ 
     if (loading) {
         return (
             <SafeAreaView>
@@ -22,20 +24,29 @@ export default ({navigation}) => {
         )
     }
 
+    // AsyncStorage.clear()
+    
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <KeyboardAvoidingView
                 style={{ flex: 1 }}
                 behavior="padding"
             >
-                <FlatList
+                <SectionList
+                    sections={[
+                        {title: 'List', data: list},
+                        {title: 'Cart', data: cart}, 
+                    ]}
+                    renderSectionHeader={({ section }) => {
+                        <SectionHeader title={section.title} />
+                    }}
                     data={list}
                     renderItem={({ item, index }) => {
                         return <ListItem
                             name={item.name}
-                            onFavoritePress={() => alert("TODO: Do something here")}
+                            onFavoritePress={() => addToFavourites(item)}
                             isFavorite={index < 2}
-                            onAddedSwipe={() => removeItem(item.id)}
+                            onAddedSwipe={() => addToCart(item)}
                             onDeleteSwipe={() => removeItem(item.id)}
                             onRowPress={() => {
                                 navigation.navigate('ItemDetails', { 
